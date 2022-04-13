@@ -29,7 +29,7 @@ public class CurrentWeather {
 	public String toString() {
 		return "Weather{" + "info: " + description + 
 				"derece: " + temperature + 
-				"hissedilen sıcaklık: " + feelsLike + 
-				"rüzgar hızı: " + windSpeed + "}";
+				"hissedilen sicaklik: " + feelsLike + 
+				"ruzgar hizi: " + windSpeed + "}";
 	}
 }

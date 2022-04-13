@@ -2,7 +2,9 @@ package patika.bootcamp.weatherrestservice.controller;
 
 import javax.validation.Valid;
 import javax.validation.constraints.Positive;
+import javax.validation.constraints.Size;
 
+import org.hibernate.validator.constraints.Length;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
@@ -26,8 +28,12 @@ public class WeathersController {
 	@Autowired
 	WeatherService weatherService;
 	
+	//verilen sehir ve ulke bilgisine gore hava durumu bilgisini getir:
+	//validasona uyulmazsa
 	@GetMapping("getCurrentWeather")
-	public CurrentWeather getCurrentWeather(@RequestParam String city, @RequestParam String country){
+	public CurrentWeather getCurrentWeather(
+			@RequestParam @Length(min = 2, max = 10, message = "sehir min 2 karakter olmali") String city,
+			@RequestParam @Length(min = 2, max = 10, message = "ulke min 2 karakter olmali") String country){
 	 	return weatherService.getCurrentWeather(city, country);
 	}
 	
