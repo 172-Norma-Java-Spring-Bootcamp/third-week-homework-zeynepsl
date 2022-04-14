@@ -1,5 +1,6 @@
 package patika.bootcamp.weatherrestservice.controller;
 
+import java.net.MalformedURLException;
 import java.net.URISyntaxException;
 
 import javax.validation.ConstraintViolationException;
@@ -30,7 +31,7 @@ public class RestServiceControllerAdvice extends ResponseEntityExceptionHandler 
 	//NullPointerException alirsan buraya git dedik spring e
 	@ExceptionHandler(NullPointerException.class)
 	public ResponseEntity<Object> onNullPointerExceptionHandled(NullPointerException e) {
-		return buildResponseEntity(new ApiError(HttpStatus.BAD_REQUEST, ""));
+		return buildResponseEntity(new ApiError(HttpStatus.BAD_REQUEST, "NullPointerException"));
 	}
 	
 	@Override
@@ -70,11 +71,20 @@ public class RestServiceControllerAdvice extends ResponseEntityExceptionHandler 
 		return buildResponseEntity(new ApiError(HttpStatus.BAD_REQUEST, "ConstraintViolationException"));
 	}
 	
+	@ExceptionHandler(IllegalArgumentException.class)
+	public ResponseEntity<Object> onIllegalArgumentException(IllegalArgumentException e){
+		return buildResponseEntity(new ApiError(HttpStatus.BAD_REQUEST, "IllegalArgumentException"));
+	}
+	
+	@ExceptionHandler(MalformedURLException.class)
+	public ResponseEntity<Object> onMalformedURLException(MalformedURLException e){
+		return buildResponseEntity(new ApiError(HttpStatus.BAD_REQUEST, "MalformedURLException"));
+	}
+	
 	@ExceptionHandler(BadRequest.class)
 	public ResponseEntity<Object> onBadRequest(BadRequest e) {
 		return buildResponseEntity(new ApiError(HttpStatus.BAD_REQUEST, "BadRequest"));
 	}
-	
 	
 	private ResponseEntity<Object> buildResponseEntity(ApiError apiError) {
 		return new ResponseEntity<Object>(apiError, apiError.getStatus());

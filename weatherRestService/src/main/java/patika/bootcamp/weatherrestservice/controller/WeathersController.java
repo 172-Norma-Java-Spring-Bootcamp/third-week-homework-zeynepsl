@@ -2,7 +2,6 @@ package patika.bootcamp.weatherrestservice.controller;
 
 import javax.validation.Valid;
 import javax.validation.constraints.Positive;
-import javax.validation.constraints.Size;
 
 import org.hibernate.validator.constraints.Length;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,6 +17,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import patika.bootcamp.weatherrestservice.model.CurrentWeather;
+import patika.bootcamp.weatherrestservice.model.WeatherForecast;
 import patika.bootcamp.weatherrestservice.service.WeatherService;
 
 @RestController
@@ -28,13 +28,27 @@ public class WeathersController {
 	@Autowired
 	WeatherService weatherService;
 	
-	//verilen sehir ve ulke bilgisine gore hava durumu bilgisini getir:
-	//validasona uyulmazsa
 	@GetMapping("getCurrentWeather")
 	public CurrentWeather getCurrentWeather(
 			@RequestParam @Length(min = 2, max = 10, message = "sehir min 2 karakter olmali") String city,
 			@RequestParam @Length(min = 2, max = 10, message = "ulke min 2 karakter olmali") String country){
 	 	return weatherService.getCurrentWeather(city, country);
+	}
+	
+	//verilen sehir ve ulke bilgisine gore anlik hava durumu bilgisini getirir:
+	@GetMapping("getCurrentWeatherWithOtoUrl")
+	public CurrentWeather getCurrentWeatherWithOtoUrl(
+			@RequestParam @Length(min = 2, max = 10, message = "must be at least 2 characters") String city, 
+			@RequestParam @Length(min = 2, max = 10, message = "must be at least 2 characters") String country){
+		return weatherService.getCurrentWeatherWithOtoUrl(city, country);
+	}
+	
+	//verilen sehir ve ulke bilgisine gore hava durumu tahminlerini getirir:
+	@GetMapping("getWeatherForecastWithOtoUrl")
+	public WeatherForecast getWeatherForecastWithOtoUrl(
+			@RequestParam @Length(min = 2, max = 10, message = "must be at least 2 characters") String city, 
+			@RequestParam @Length(min = 2, max = 10, message = "must be at least 2 characters") String country) {
+		return weatherService.getWeatherForecastWithOtoUrl(city, country);
 	}
 	
 	@PutMapping(path =  "search/{weatherId}")
@@ -47,7 +61,7 @@ public class WeathersController {
 		return ResponseEntity.ok(weather.getDescription());
 	}
 	
-	//istek parametrelerinieksik gonderirsen metodun icine bile girmez
+	//istek parametrelerini validasyona uygun gondermezsen metodun icine bile girmez
 	@GetMapping(path =  "getWeathers")
 	public ResponseEntity<Object> getWeathers(@RequestParam("id") int id, @RequestParam("info") String info) throws Exception{
 		//NullPointerException geldigi anda spring araya girer, spring in yapısı proxy objeler üzerinden
