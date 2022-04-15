@@ -25,7 +25,7 @@ Exception handling işlemlerini halletmeniz.
 
 ## request 1 - get current weather by given city and country
 #### code
-[code link](https://github.com/172-Norma-Java-Spring-Bootcamp/third-week-homework-zeynepsl/blob/main/weatherRestService/src/main/java/patika/bootcamp/weatherrestservice/service/LiveWeatherServiceImpl.java)
+[code link](https://github.com/172-Norma-Java-Spring-Bootcamp/third-week-homework-zeynepsl/blob/70e2ea09197222cf1e6b7750e845d28abb3c53b5/weatherRestService/src/main/java/patika/bootcamp/weatherrestservice/service/LiveWeatherServiceImpl.java#L60)
 ``` java
 public CurrentWeather getCurrentWeatherWithOtoUrl(String city, String country);
 ```
