@@ -1,16 +1,17 @@
 package patika.bootcamp.weatherrestservice.model;
 
-
 import java.util.ArrayList;
-import java.util.List;
+import java.util.Collection;
 
 import lombok.AllArgsConstructor;
-import lombok.Data;
+import lombok.Getter;
+import lombok.Setter;
 
-@Data
+@Getter
+@Setter
 @AllArgsConstructor
 public class WeatherForecast {
-	List<CurrentWeather> weathers;
+	private Collection<CurrentWeather> weathers;
 	
 	public WeatherForecast() {
 		weathers = new ArrayList<CurrentWeather>();

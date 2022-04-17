@@ -15,12 +15,13 @@ import org.springframework.web.bind.annotation.RestControllerAdvice;
 import org.springframework.web.client.HttpClientErrorException.BadRequest;
 import org.springframework.web.client.HttpClientErrorException.NotFound;
 import org.springframework.web.client.HttpServerErrorException.InternalServerError;
+import org.springframework.web.client.RestClientException;
 import org.springframework.web.context.request.WebRequest;
 import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 
-import patika.bootcamp.weatherrestservice.exceptions.ApiError;
+import patika.bootcamp.weatherrestservice.exception.ApiError;
 
 //@ResponseBody yazmamak icin:
 @RestControllerAdvice
@@ -39,6 +40,12 @@ public class RestServiceControllerAdvice extends ResponseEntityExceptionHandler 
 			HttpHeaders headers, HttpStatus status, WebRequest request) {
 		return buildResponseEntity(new ApiError(HttpStatus.BAD_REQUEST, "HttpMessageNotReadableException"));
 	}
+	
+	@ExceptionHandler(RuntimeException.class)
+	public ResponseEntity<Object> onRuntimeException(RuntimeException ex){
+		return buildResponseEntity(new ApiError(HttpStatus.BAD_REQUEST, ex.getLocalizedMessage()));
+	}
+
 	
 	@ExceptionHandler(InternalServerError.class)
 	public ResponseEntity<Object> onInternalServerError(InternalServerError error) {
@@ -79,6 +86,10 @@ public class RestServiceControllerAdvice extends ResponseEntityExceptionHandler 
 	@ExceptionHandler(MalformedURLException.class)
 	public ResponseEntity<Object> onMalformedURLException(MalformedURLException e){
 		return buildResponseEntity(new ApiError(HttpStatus.BAD_REQUEST, "MalformedURLException"));
+	}
+	
+	public ResponseEntity<Object> onRestClientException(RestClientException e){
+		return buildResponseEntity(new ApiError(HttpStatus.BAD_REQUEST, "RestClientException"));
 	}
 	
 	@ExceptionHandler(BadRequest.class)

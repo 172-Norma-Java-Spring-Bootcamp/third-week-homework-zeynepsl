@@ -14,8 +14,8 @@ public interface WeatherService {
 	
     CurrentWeather getCurrentWeatherStub(String city, String country);
 	
-    CurrentWeather convertCurrentWeather(ResponseEntity<String> response);
+    CurrentWeather convertToCurrentWeather(ResponseEntity<String> response);
     
-    WeatherForecast convertWeatherForecast(ResponseEntity<String> response);
+    WeatherForecast convertToWeatherForecast(ResponseEntity<String> response);
    
 }

@@ -6,14 +6,16 @@ import javax.validation.constraints.Min;
 import javax.validation.constraints.NotBlank;
 
 import lombok.AllArgsConstructor;
-import lombok.Data;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 /*CurrentWeather POJO muz burada
  *free API den gelen bilgiyi ayristirip bu classdaki degiskenlere atayacagiz
  *boylelikle client'a daha anlasilir bir response donmus olacagiz*/
 
-@Data
+@Getter
+@Setter
 @AllArgsConstructor
 @NoArgsConstructor
 public class CurrentWeather {

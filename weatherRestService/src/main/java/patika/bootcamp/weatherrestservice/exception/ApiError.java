@@ -1,4 +1,4 @@
-package patika.bootcamp.weatherrestservice.exceptions;
+package patika.bootcamp.weatherrestservice.exception;
 
 import java.time.LocalDateTime;
 

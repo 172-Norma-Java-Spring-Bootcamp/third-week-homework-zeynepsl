@@ -25,10 +25,15 @@ import patika.bootcamp.weatherrestservice.service.WeatherService;
 @Validated
 public class WeathersController {
 	
-	@Autowired
-	WeatherService weatherService;
 	
-	@GetMapping("getCurrentWeather")
+	private final WeatherService weatherService;
+	
+	public WeathersController(WeatherService weatherService) {
+		super();
+		this.weatherService = weatherService;
+	}
+
+	@GetMapping("")
 	public CurrentWeather getCurrentWeather(
 			@RequestParam @Length(min = 2, max = 10, message = "sehir min 2 karakter olmali") String city,
 			@RequestParam @Length(min = 2, max = 10, message = "ulke min 2 karakter olmali") String country){
@@ -36,7 +41,7 @@ public class WeathersController {
 	}
 	
 	//verilen sehir ve ulke bilgisine gore anlik hava durumu bilgisini getirir:
-	@GetMapping("getCurrentWeatherWithOtoUrl")
+	@GetMapping("current")
 	public CurrentWeather getCurrentWeatherWithOtoUrl(
 			@RequestParam @Length(min = 2, max = 10, message = "must be at least 2 characters") String city, 
 			@RequestParam @Length(min = 2, max = 10, message = "must be at least 2 characters") String country){
@@ -44,7 +49,7 @@ public class WeathersController {
 	}
 	
 	//verilen sehir ve ulke bilgisine gore hava durumu tahminlerini getirir:
-	@GetMapping("getWeatherForecastWithOtoUrl")
+	@GetMapping("forecast")
 	public WeatherForecast getWeatherForecastWithOtoUrl(
 			@RequestParam @Length(min = 2, max = 10, message = "must be at least 2 characters") String city, 
 			@RequestParam @Length(min = 2, max = 10, message = "must be at least 2 characters") String country) {

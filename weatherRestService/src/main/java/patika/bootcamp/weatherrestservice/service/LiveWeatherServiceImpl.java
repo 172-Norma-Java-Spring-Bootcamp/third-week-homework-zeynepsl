@@ -52,7 +52,7 @@ public class LiveWeatherServiceImpl implements WeatherService {
 		
 		ResponseEntity<String> res = restTemplate.exchange(strUri, HttpMethod.GET, entity, String.class);
 		//exchange -->> url, http method, , donus tipi
-		return convertCurrentWeather(res);
+		return convertToCurrentWeather(res);
 	}
 	
 	//url yi restTemplate ile otomatik olusturmak icin:
@@ -60,13 +60,13 @@ public class LiveWeatherServiceImpl implements WeatherService {
 	public CurrentWeather getCurrentWeatherWithOtoUrl(String city, String country){
 		URI url = new UriTemplate(WEATHER_URL).expand(city, country, apiKey);
 		ResponseEntity<String> response = restTemplate.getForEntity(url, String.class);
-        return convertCurrentWeather(response);
+        return convertToCurrentWeather(response);
 	}
 	
 	public WeatherForecast getWeatherForecastWithOtoUrl(String city, String country){
 		URI url = new UriTemplate(FORECAST_URL).expand(city, country, apiKey);
 		ResponseEntity<String> response = restTemplate.getForEntity(url, String.class);
-        return convertWeatherForecast(response);
+        return convertToWeatherForecast(response);
 	}
 
 
@@ -75,7 +75,7 @@ public class LiveWeatherServiceImpl implements WeatherService {
 	 * ardindan CurrentWeather POJO'muza, verilen yaniti cevirebilmek için
 	 * Jackson'in ObjectMapper'ini kullaniyoruz
 	 */
-	public CurrentWeather convertCurrentWeather(ResponseEntity<String> response) {
+	public CurrentWeather convertToCurrentWeather(ResponseEntity<String> response) {
 		try {
 			JsonNode root = objectMapper.readTree(response.getBody());
 			return new CurrentWeather(root.path("weather").get(0).path("main").asText(),
@@ -87,7 +87,7 @@ public class LiveWeatherServiceImpl implements WeatherService {
 		}
 	}
 	
-	public WeatherForecast convertWeatherForecast(ResponseEntity<String> response) {
+	public WeatherForecast convertToWeatherForecast(ResponseEntity<String> response) {
 		WeatherForecast forecast = new WeatherForecast();
 		List<CurrentWeather> currentWeathers = new ArrayList<CurrentWeather>();
 	
