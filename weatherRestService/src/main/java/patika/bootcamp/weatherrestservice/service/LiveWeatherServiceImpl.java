@@ -43,19 +43,19 @@ public class LiveWeatherServiceImpl implements WeatherService {
 	}
 
 	public CurrentWeather getCurrentWeather(String city, String country) {
-		HttpHeaders headers = new HttpHeaders();//request headerlarini set etmek icin HttpHeaders kullaniyoruz
+		HttpHeaders headers = new HttpHeaders();//we use HttpHeaders for setting request headers
 		headers.setAccept(Arrays.asList(MediaType.APPLICATION_JSON));	
-		HttpEntity<String> entity = new HttpEntity<String>(headers);//request nesnesini sarmalamak (warp) icin HttpEntity kullaniyoruz
+		HttpEntity<String> entity = new HttpEntity<String>(headers);//we use HttpEntity for wrapping request object
 		
 		//String strUri = "http://api.openweathermap.org/data/2.5/weather?q=" + city + "," + country + "&APPID=" + apiKey + "&units=imperial";
 		String strUri = String.format(baseUrl, city, country, apiKey);
 		
 		ResponseEntity<String> res = restTemplate.exchange(strUri, HttpMethod.GET, entity, String.class);
-		//exchange -->> url, http method, , donus tipi
+		//exchange -->> url, http method, , return type
 		return convertCurrentWeather(res);
 	}
 	
-	//url yi restTemplate ile otomatik olusturmak icin:
+	//for creating automatically the url with restTemplate
 	
 	public CurrentWeather getCurrentWeatherWithOtoUrl(String city, String country){
 		URI url = new UriTemplate(WEATHER_URL).expand(city, country, apiKey);
@@ -71,9 +71,9 @@ public class LiveWeatherServiceImpl implements WeatherService {
 
 
 	/*
-	 * OpenWeatherMap API'ye bir REST cagrisi yapiyoruz --> getCurrentWeatherWithOtoUrl() ve
-	 * ardindan CurrentWeather POJO'muza, verilen yaniti cevirebilmek için
-	 * Jackson'in ObjectMapper'ini kullaniyoruz
+	we call OpenWeatherMap API with getCurrentWeatherWithOtoUrl() method
+	after then,
+	we use ObjectMapper of json for mapping the response to our CurrentWeather POJO
 	 */
 	public CurrentWeather convertCurrentWeather(ResponseEntity<String> response) {
 		try {
